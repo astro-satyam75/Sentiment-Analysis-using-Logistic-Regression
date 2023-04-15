@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Movie Review Sentiment Analysis</title>
+  </head>
+  <body>
+    <h1>Select a movie:</h1>
+    <form method="POST" action="/make_prediction">
+      <select name="movie">
+        {% set movie_count = 0 %}
+        {% for movie in movies %}
+        {% set movie_count = movie_count + 1 %}
+        <option value="{{ movie }}">{{ movie }}</option>
+        {% endfor %}
+      </select>
+      <br><br>
+      <input type="submit" value="Get Sentiment">
+    </form>
+
+    {% if movie is defined %}
+    <h1>Results for {{ movie }}</h1>
+    {% if reviews is defined %}
+    {% set review_count = 0 %}
+    {% for review in reviews %}
+    {% set review_count = review_count + 1 %}
+    <h2>Review {{ review_count }}</h2>
+    <p>{{ review }}</p>
+    {% set sentiment_index = review_count - 1 %}
+    {% if sentiment_index < (sentiments|length if sentiments is defined else 0) %}
+    <h2>Sentiment {{ review_count }}</h2>
+    <p>{{ sentiments[sentiment_index] }}</p>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+    <h2>Model Evaluation Metrics:</h2>
+    <p>Accuracy: {{ accuracy }}</p>
+    <p>Precision: {{ precision }}</p>
+    <p>Recall: {{ recall }}</p>
+    <p>F1-Score: {{ f1 }}</p>
+    {% endif %}
+  </body>
+</html>
