@@ -1,3 +1,5 @@
+## ROTTEN TOMATOES MOVIE REVIEW SENTIMENT ANALYZER USING LOGISTIC REGRESSION
+
 This is a Flask web application that performs sentiment analysis on movie reviews using the Logistic Regression algorithm.
 
 The code first reads in two CSV files, rotten_tomatoes_critic_reviews.csv and rotten_tomatoes_movies.csv, merges them on the rotten_tomatoes_link column, and extracts the movie_title and review_content columns. The reviews are grouped by movie title and processed for text preprocessing, which includes converting to lowercase, tokenizing into words, removing stop words, and converting back into a string.
