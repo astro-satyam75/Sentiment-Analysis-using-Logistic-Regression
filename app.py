@@ -36,7 +36,7 @@ df['review_content'] = df['review_content'].apply(lambda x: ' '.join(x))  # join
 
 # Labeling data using AFINN sentiment lexicon
 afinn = Afinn()
-labels = np.where(df['review_content'].apply(afinn.score) >= 0, 1, 0)
+labels = np.where(df['review_content'].apply(afinn.score) >= -2, 1, 0)
 
 # Splitting the data into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(df['review_content'], labels, test_size=0.2, random_state=42)
@@ -93,6 +93,13 @@ def make_prediction():
             else:
                 sentiment = 'Negative'
             sentiments.append(sentiment)
+    
+    # Save movie titles and corresponding sentiments to CSV file
+    with open('movie_sentiments.csv', mode='w') as file:
+        writer = csv.writer(file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        writer.writerow(['Movie Title', 'Sentiment'])
+        for i, sentiment in enumerate(sentiments):
+            writer.writerow([reviews[i], sentiment])
 
     # Get the list of movies
     movies = df['movie_title'].unique().tolist()
